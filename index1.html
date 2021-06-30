@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+	body{
+		margin-left: 25%; 
+		margin-right: 25%;
+		margin-top: 3%;
+		background-image: url("Kubernetes.jpg");
+		background-size: 1380px 680px;
+	    background-repeat: no-repeat;
+	    background-attachment: fixed;
+	}
+	input[type=text]{
+box-shadow: 5px 5px 5px #E0E0E0;
+ padding: 8px 5px;
+ height: 20px ;
+ width : 500px;
+ margin: 8px 0;
+ box-sizing: 30px 25px;
+ border: 3px solid #287393;
+ -webkit-trasition: 0.5s;
+ transition: 0.5s;
+ border-radius: 20px;
+ outline: none;
+}
+
+ input[type=submit]{
+  background-color: #287393;
+  color: #fff;
+  padding: 13px 10px;
+  border: 1px solid #eee;
+  border-radius: 18px;
+  box-shadow: 5px 5px 5px #E0E0E0;
+  cursor: pointer;
+  float: center;
+}
+#id1{
+	width: 450px;
+      
+  border: 5px solid gray;
+  padding: 50px;
+  margin: 20px 15px ;
+  border-radius: 20px;
+}
+</style>
+<center><div style="font-size: 60px; color: #BEBEBE;">pod list</div>
+<input type="submit" value="Click " onclick="listpod()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d1" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">......</div> 
+</center>
+</pre>
+
+<center><div style="font-size: 60px; color: #BEBEBE;">Create Pod</div>
+Enter the pod name<input id="in1" type="text" name="x" placeholder="name">
+Enter the image name<input id="in2" type="text" name="y" value="vimal13/apache-webserver-php">
+<input type="submit" value="Click " onclick="create()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d2" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">.......... </div> 
+</center>
+</pre>
+
+
+<center><div style="font-size: 60px; color: #BEBEBE;">Run Pod</div>
+Enter the pod name<input id="in3" type="text" name="x" placeholder="name">
+Enter the image name<input id="in4" type="text" name="y" value="vimal13/apache-webserver-php">
+<input type="submit" value="Click " onclick="run()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d3" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">.......... </div> 
+</center>
+</pre>
+
+<center><div style="font-size: 60px; color: #BEBEBE;">Scale the replica</div>
+Enter the name<input id="in5" type="text" name="x" placeholder="name">
+<br>Enter the no. of Replica<input id="in6" type="text" name="y" >
+<input type="submit" value="Click " onclick="replica()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d4" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">.......... </div> 
+</center>
+</pre>
+
+<center><div style="font-size: 60px; color: #BEBEBE;">Delete specific </div>
+Enter the name<input id="in7" type="text" name="x" placeholder="name">
+
+<input type="submit" value="Click " onclick="delete_pod()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d5" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">.......... </div> 
+</center>
+</pre>
+
+<center><div style="font-size: 60px; color: #BEBEBE;">delete all</div>
+<input type="submit" value="Click " onclick="delete_all()" /></center><br>
+<div style="margin-left: 70px; font-size: 25px; ">Output</div>
+<center><pre>
+<div id="d6" style="width: 450px; border: 5px solid gray;padding: 50px;margin: 20px;border-radius: 20px;">......</div> 
+</center>
+</pre>
+<script> 
+function listpod() {
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/listpod.py",true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d1").innerHTML = output;
+}
+}
+
+function create() {
+var pod= document.getElementById("in1").value
+var img= document.getElementById("in2").value
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/launch.py?x="+pod+"&y="+img,true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d2").innerHTML = output;
+}
+}
+
+function run() {
+var pod= document.getElementById("in3").value
+var img= document.getElementById("in4").value
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/run.py?x="+pod+"&y="+img,true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d3").innerHTML = output;
+}
+}
+function replica() {
+var name= document.getElementById("in5").value
+var rep= document.getElementById("in6").value
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/replica.py?y="+name+"&z="+rep,true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d4").innerHTML = output;
+}
+}
+function delete_pod() {
+var name= document.getElementById("in7").value
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/delete-pod.py?x="+name,true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d5").innerHTML = output;
+}
+}
+function delete_all() {
+var xhr = new XMLHttpRequest();
+xhr.open("GET","http://192.168.99.101/cgi-bin/delete-all.py",true);
+xhr.send();
+
+xhr.onload=function(){
+var output = xhr.responseText;
+
+document.getElementById("d6").innerHTML = output;
+}
+}
+
+</script>
+</body>
+</html>
